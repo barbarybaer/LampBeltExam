@@ -51,13 +51,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 // this is the default controller. You need to change it depending on your project
-$route['default_controller'] = 'logins/index';
+$route['default_controller'] = 'sessions/index';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['login'] = 'logins/login';
-$route['users/(:num)']='quotes/display/%1';
-$route['register'] = 'logins/register';
+$route['login'] = 'sessions/login';
+$route['quotesDisp/(:num)']='quotes/display/$1';
+$route['register'] = 'sessions/register';
 $route['quotes'] = 'quotes/entry';
-$route['logoff'] = 'logins/logoff';
+$route['logoff'] = 'sessions/logoff';
 $route['addQuote'] = 'quotes/add';
-
+$route['addToFavorites'] = 'quotes/addToFavorites';
+$route['removeFromList'] = 'quotes/remove';
+//$route['quotesDisp']='quotes/display';

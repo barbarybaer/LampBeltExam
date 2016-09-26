@@ -4,24 +4,32 @@ class Quotes extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-//		$this->output->enable_profiler();
-		$this->load->library("form_validation");
+		$this->output->enable_profiler();
+		
 		$this->load->model('Quote');
 		
 	}
-	public function display($userid)
-	{
-		$this->load->view('quoteDisplay',["id" => $userid]);
+	public function display($id)
+	{	
+		$results['quotes']=$this->Quote->getQuotesAddedByPoster($id);
+		//$results['count'] = $this->Quote->getQuoteCountByPoster($id);
+		
+		 //var_dump($results);
+		$this->load->view('/quoteDisplay',$results);
+		
 	}
 	public function entry()
 	{
 		
-		$results['quotes'] = $this->Quote->getAllQuotes();
+		$results['allQuotes'] = $this->Quote->getAllQuotes();
+		$results['favorites'] = $this->Quote->getAllFavorites();
+		// var_dump($results);
 		$this->load->view('/quoteEntry',$results);
 		
 	}
 	public function add()
 	{
+		$this->load->library("form_validation");
 		$this->form_validation->set_rules("author", "author", "trim|required|min_length[3]");
 		$this->form_validation->set_rules("message", "message", "trim|required|min_length[10]");
 		
@@ -38,5 +46,19 @@ class Quotes extends CI_Controller{
 			$this->entry();
 		}
 	}
+	public function addToFavorites()
+	{
+		//var_dump($this->input->post());
+		$this->Quote->addToFavorites($this->input->post());
+		$this->entry();
+		
+	}
+	public function remove()
+	{
+		$this->Quote->remove($this->input->post());
+		$this->entry();
+	}
+
+
 }
 ?>

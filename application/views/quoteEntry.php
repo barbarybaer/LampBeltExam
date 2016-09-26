@@ -29,11 +29,13 @@
 	<div id="nonFavorites">
 		<h3>Quotable Quotes</h3>
 		<div class='quote'>
-<?php foreach($quotes as $quote){
-?>			<form action='addToList' class='singleQuote'>
-				<p><?=$quote['author']?>: <?=$quote['quote']?></p>
-				Posted by <a href='#'><?=$quote['poster']?></a>
-				<input type="submit" name="addToList" value="Add to My List">
+<?php foreach($allQuotes as $quote){
+?>			<form action='addToFavorites' class='singleQuote' method="post">
+				<p name=''><?=$quote['author']?>: <?=$quote['quote']?></p>
+
+				Posted by <a href='quotesDisp/<?=$quote['posted_id']?>'><?=$quote['poster']?></a>
+				<input hidden name='id' value=<?=$quote['id']?>>
+				<input type="submit" name="addToFavorites" value="Add to My List" >
 			</form>
 <?php			
 }			
@@ -45,11 +47,16 @@
 	<div id='favorites'>
 		<h3>Your Favorites</h3>
 		<div class='quote'>
-			<form action='removeList' class='singleQuote'>
-				<p></p>
-				Posted by <a href='#'>name</a>
+<?php 	foreach($favorites as $favorite) {
+ ?>			<form action='removeFromList' class='singleQuote' method="post">
+				<p><?=$favorite['author']?>: <?=$favorite['quote']?></p>
+				Posted by <a href=''><?=$favorite['author']?></a>
+				<input hidden name='id' value=<?=$favorite['id']?>>
 				<input type="submit" name="removeFromList" value="Remove from My List">
 			</form>
+<?php
+}
+?>
 		</div>
 		<div>
 			<h3>Contribute a Quote:</h3>	

@@ -1,21 +1,20 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Sessions extends CI_Controller{
-	
+
 
 	public function __construct()
 	{
 		parent::__construct();
 		//$this->output->enable_profiler();
-		
-		
+
+
 	}
 	public function index()
 	{
 		$this->load->view('index');
 	}
-	public function login()
-	{
+	public function login()	{
 		$this->load->library("form_validation");
 		$this->form_validation->set_rules("email", "email", "trim|required|valid_email");
 		$this->form_validation->set_rules("password","password", "trim|required|min_length[8]");
@@ -33,16 +32,16 @@ class Sessions extends CI_Controller{
 				$this->session->set_userdata($user);
 				// redirect('/users/' . $user['id']);
 				redirect('quotes');
-				
+
 			}
 			else{
 				$this->session->set_flashdata("login_errors", "You are not in the database. Please register.");
 				redirect('/');
 			}
-		    
+
 		}
 	}
-	
+
 	public function register()
 	{
 		$this->load->library("form_validation");
@@ -68,7 +67,7 @@ class Sessions extends CI_Controller{
 			if (!$this->Session->getUser($this->input->post())){
 				$this->Session->addUser($this->input->post());
 
-				$user = $this->Login->getUser($this->input->post());
+				$user = $this->Session->getUser($this->input->post());
 
 				$this->session->set_userdata($user);
 				// $this->load->view("quoteDisplay");
@@ -82,11 +81,11 @@ class Sessions extends CI_Controller{
 	}
 	function logoff()
 	{
-		
+
 		$this->session->sess_destroy();
 		redirect('/');
 	}
-	
-	
+
+
 }
 ?>

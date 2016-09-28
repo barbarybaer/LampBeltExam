@@ -1,5 +1,5 @@
 <?php
-class Login extends CI_Model{
+class Session extends CI_Model{
 	function getUser($userInfo)
     {
         $sql = "SELECT * FROM users WHERE email = ? and password = ?";

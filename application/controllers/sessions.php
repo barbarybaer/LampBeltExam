@@ -6,7 +6,7 @@ class Sessions extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-		$this->output->enable_profiler();
+		//$this->output->enable_profiler();
 		
 		
 	}
@@ -16,6 +16,7 @@ class Sessions extends CI_Controller{
 	}
 	public function login()
 	{
+		$this->load->library("form_validation");
 		$this->form_validation->set_rules("email", "email", "trim|required|valid_email");
 		$this->form_validation->set_rules("password","password", "trim|required|min_length[8]");
 		if($this->form_validation->run() === FALSE)
@@ -25,8 +26,8 @@ class Sessions extends CI_Controller{
 		}
 		else
 		{
-			$this->load->model("Login");
-			$user = $this->Login->getUser($this->input->post());
+			$this->load->model("Session");
+			$user = $this->Session->getUser($this->input->post());
 
 			if ($user) {
 				$this->session->set_userdata($user);
@@ -50,8 +51,8 @@ class Sessions extends CI_Controller{
 		$this->form_validation->set_rules("email", "email", "trim|required|valid_email");
 		$this->form_validation->set_rules("confirmPassword", "password confirmation", "trim|required|matches[password]");
 		$this->form_validation->set_rules("password", "password", "trim|required|min_length[8]");
-		
-		$parts = explode("-",$this->input->post('dob'));
+		$this->form_validation->set_rules("dob", "dob", "trim|required|min_length[8]");
+		$parts = explode("/",$this->input->post('dob'));
 		$year = $parts[0];
 		$month = $parts[1];
 		$day = $parts[2];
@@ -63,9 +64,9 @@ class Sessions extends CI_Controller{
 		}
 		else
 		{
-		    $this->load->model("Login");
-			if (!$this->Login->getUser($this->input->post())){
-				$this->Login->addUser($this->input->post());
+		    $this->load->model("Session");
+			if (!$this->Session->getUser($this->input->post())){
+				$this->Session->addUser($this->input->post());
 
 				$user = $this->Login->getUser($this->input->post());
 

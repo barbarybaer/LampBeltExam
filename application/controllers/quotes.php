@@ -4,7 +4,7 @@ class Quotes extends CI_Controller{
 	public function __construct()
 	{
 		parent::__construct();
-		$this->output->enable_profiler();
+		//$this->output->enable_profiler();
 		
 		$this->load->model('Quote');
 		
@@ -23,7 +23,7 @@ class Quotes extends CI_Controller{
 		
 		$results['allQuotes'] = $this->Quote->getAllQuotes();
 		$results['favorites'] = $this->Quote->getAllFavorites();
-		// var_dump($results);
+		// var_dump($results);die();
 		$this->load->view('/quoteEntry',$results);
 		
 	}
@@ -36,19 +36,19 @@ class Quotes extends CI_Controller{
 		if($this->form_validation->run() === FALSE)
 		{	
 		    $this->session->set_flashdata("quote_errors", validation_errors());
-		    //var_dump($this->session);die();
-			$this->entry();
+		    $this->entry();
 			//redirect('quotes');
 		}
 
 		else{
-			$this->Quote->addQuote($this->input->post());
+
+			$success = $this->Quote->addQuote($this->input->post());
 			$this->entry();
+			//redirect('quotes');
 		}
 	}
 	public function addToFavorites()
 	{
-		//var_dump($this->input->post());
 		$this->Quote->addToFavorites($this->input->post());
 		$this->entry();
 		

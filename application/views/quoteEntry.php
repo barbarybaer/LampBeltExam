@@ -32,7 +32,6 @@
 <?php foreach($allQuotes as $quote){
 ?>			<form action='addToFavorites' class='singleQuote' method="post">
 				<p name=''><?=$quote['author']?>: <?=$quote['quote']?></p>
-
 				Posted by <a href='quotesDisp/<?=$quote['posted_id']?>'><?=$quote['poster']?></a>
 				<input hidden name='id' value=<?=$quote['id']?>>
 				<input type="submit" name="addToFavorites" value="Add to My List" >
@@ -50,7 +49,7 @@
 <?php 	foreach($favorites as $favorite) {
  ?>			<form action='removeFromList' class='singleQuote' method="post">
 				<p><?=$favorite['author']?>: <?=$favorite['quote']?></p>
-				Posted by <a href=''><?=$favorite['author']?></a>
+				Posted by <a href='quotesDisp/<?=$favorite['posted_id']?>'><?=$favorite['alias']?></a>
 				<input hidden name='id' value=<?=$favorite['id']?>>
 				<input type="submit" name="removeFromList" value="Remove from My List">
 			</form>
@@ -62,7 +61,7 @@
 			<h3>Contribute a Quote:</h3>	
 			<form action= 'addQuote' name='contribute' method="post">
 				Quoted By:<input type="text" name="author">
-				Message:<input type="text" name="message">
+				Message:<textarea cols="40" rows="6" name="message"></textarea>
 				<input type="submit" name="submitQuote">
 			</form>
 		</div>
